@@ -1,240 +1,202 @@
 # FIDE Player Data Extractor
 
-A Python program to extract FIDE chess player data from [ratings.fide.com](https://ratings.fide.com/) and export to multiple formats.
+A Python application for extracting and exporting chess player data from the official FIDE ratings database.
 
-## ✨ Features
+## Overview
 
-- 🖥️ **Graphical User Interface** - Easy-to-use GUI with no coding required
-- 🔍 **Flexible Search** - Extract by FIDE ID or player name
-- 📊 **Multiple Export Formats** - Excel (.xlsx), CSV (.csv), and JSON (.json)
-- ⚡ **Batch Processing** - Extract multiple players at once
-- 📈 **Complete Data** - Get ratings, titles, federation, and more
-- 🎯 **Real-time Display** - View results in a sortable table
+This tool enables automated extraction of player information from [ratings.fide.com](https://ratings.fide.com/), supporting both graphical and command-line interfaces with multiple export formats.
 
-## 📦 What Data is Extracted?
+**Key Features:**
+- Search by FIDE ID or player name
+- Batch processing of multiple players
+- Export to Excel, CSV, and JSON formats
+- Graphical user interface and command-line options
+- Real-time data extraction from official FIDE database
 
-For each player:
-- FIDE ID
-- Full Name
-- Federation/Country
-- Chess Title (GM, IM, FM, WGM, etc.)
-- Birth Year
-- Standard Chess Rating
-- Rapid Chess Rating
-- Blitz Chess Rating
+## Quick Start
 
-## 🚀 Quick Start
+### Prerequisites
 
-### 1. Installation
+- Python 3.8 or higher
+- Internet connection
+- pip (Python package installer)
 
-```bash
-# Navigate to the project folder
-cd /Users/artan/Desktop/development/Fide
+### Installation
 
-# Create virtual environment
-python3 -m venv venv
+1. **Clone or download this repository**
 
-# Activate virtual environment
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+2. **Set up virtual environment**
+   ```bash
+   cd /path/to/Fide
+   python3 -m venv venv
+   ```
 
-# Install dependencies
-pip install -r requirements.txt
-```
+3. **Activate virtual environment**
+   ```bash
+   # macOS/Linux
+   source venv/bin/activate
+   
+   # Windows
+   venv\Scripts\activate
+   ```
 
-### 2. Run the GUI (Recommended)
+4. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-```bash
-# Make sure virtual environment is activated
-source venv/bin/activate
+### macOS Additional Setup (Required for GUI)
 
-# Launch GUI
-python fide_gui.py
-```
-
-Or use the launcher:
-```bash
-./launch_gui.sh  # Mac/Linux
-launch_gui.bat   # Windows
-```
-
-### 3. Use it!
-
-1. Enter FIDE IDs or player names (one per line)
-2. Click **"🔍 Extract Data"**
-3. View results in the table
-4. Export to Excel, CSV, or JSON
-
-**That's it!** ✅
-
-## 📖 Usage Methods
-
-### 🖥️ Method 1: GUI Application (Easiest)
-
-The graphical interface is the simplest way to use the tool.
-
-**Features:**
-- Visual input area for multiple players
-- Real-time progress indicator
-- Sortable results table
-- One-click export to 3 formats
-- User-friendly error messages
-
-**How to use:**
-1. Launch: `python fide_gui.py`
-2. Enter FIDE IDs or names (one per line)
-3. Click "Extract Data"
-4. Export to your preferred format
-
-👉 See [GUI_GUIDE.md](GUI_GUIDE.md) for detailed instructions.
-
----
-
-### 💻 Method 2: Command Line (Interactive)
-
-For users who prefer terminal interaction:
-
-```bash
-python fide_extractor.py
-```
-
-Then enter FIDE IDs or player names when prompted (one per line), and press Enter twice when done.
-
-**Example:**
-```
-Enter FIDE IDs or player names (one per line).
-Press Enter twice when done:
-
-1503014
-Gukesh D
-Magnus Carlsen
-
-[Enter]
-[Enter]
-```
-
-Output: `fide_players.xlsx`
-
----
-
-### 📝 Method 3: Batch from File
-
-Create a text file with FIDE IDs or names (one per line):
-
-**players.txt:**
-```
-22538496
-12528374
-Magnus Carlsen
-Gukesh D
-```
-
-Then run:
-```bash
-python extract_from_file.py players.txt output.xlsx
-```
-
----
-
-### 🐍 Method 4: Python Module
-
-Use it programmatically in your own scripts:
-
-```python
-from fide_extractor import FIDEDataExtractor
-
-# Create extractor
-extractor = FIDEDataExtractor()
-
-# Extract data
-players = ['1503014', 'Magnus Carlsen', '22538496']
-data = extractor.extract_multiple_players(players)
-
-# Export to Excel
-extractor.export_to_excel(data, 'my_players.xlsx')
-```
-
-**Export methods:**
-```python
-# Excel
-extractor.export_to_excel(data, 'players.xlsx')
-
-# CSV (do it manually)
-import pandas as pd
-df = pd.DataFrame(data)
-df.to_csv('players.csv', index=False)
-
-# JSON
-import json
-with open('players.json', 'w') as f:
-    json.dump(data, f, indent=2)
-```
-
-## 🔧 Project Structure
-
-```
-Fide/
-├── fide_gui.py              # ⭐ GUI Application (main)
-├── fide_extractor.py        # Core extraction engine (web scraping)
-├── fide_api_extractor.py    # Alternative API-based extractor
-├── extract_from_file.py     # Batch file processor
-├── example_batch.py         # Example usage script
-│
-├── launch_gui.sh            # GUI launcher (Mac/Linux)
-├── launch_gui.bat           # GUI launcher (Windows)
-│
-├── README.md                # This file
-├── START_HERE.md            # Quick start guide
-├── GUI_GUIDE.md             # Detailed GUI tutorial
-├── QUICKSTART.md            # All usage methods
-├── COMPARISON.md            # Compare extraction methods
-│
-├── requirements.txt         # Python dependencies
-├── players_input.txt        # Sample input file
-└── .gitignore              # Git ignore rules
-```
-
-## 📊 Export Formats
-
-| Format | Extension | Best For | Opens With |
-|--------|-----------|----------|------------|
-| Excel | `.xlsx` | Spreadsheet analysis, data manipulation | Excel, Google Sheets, LibreOffice |
-| CSV | `.csv` | Universal compatibility, database import | Any spreadsheet app, text editors |
-| JSON | `.json` | Programming, web APIs, data processing | Code editors, JSON viewers |
-
-## 💡 Tips & Tricks
-
-### Finding FIDE IDs
-1. Visit [ratings.fide.com](https://ratings.fide.com/)
-2. Search for a player by name
-3. The ID is in the URL (e.g., `ratings.fide.com/profile/1503014`)
-
-### Example FIDE IDs
-- **1503014** - Magnus Carlsen (World Champion)
-- **46616543** - Gukesh D (World Champion)
-- **44129165** - Praggnanandhaa R
-- **8603677** - Hou Yifan (Top Women)
-
-### Search by Name
-You can enter partial names:
-- "Carlsen" will find Magnus Carlsen
-- "Gukesh" will find Gukesh D
-- Full names work too: "Magnus Carlsen"
-
-### Batch Processing
-The GUI and command-line tools can process dozens of players at once. Just enter one per line!
-
-## 🐛 Troubleshooting
-
-### GUI Won't Start (Missing tkinter)
-
-**Mac:**
+If you're on macOS and want to use the GUI, install tkinter:
 ```bash
 brew install python-tk@3.13
-# Then recreate virtual environment
+# Then recreate the virtual environment
 rm -rf venv
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+### First Run
+
+**Option 1: Graphical Interface (Recommended)**
+```bash
+python fide_gui.py
+```
+
+**Option 2: Command Line**
+```bash
+python fide_extractor.py
+```
+
+## Usage
+
+### GUI Application
+
+The graphical interface provides the most user-friendly experience:
+
+1. Launch the application:
+   ```bash
+   python fide_gui.py
+   ```
+
+2. Enter FIDE IDs or player names in the input area (one per line)
+
+3. Click "Extract Data" to fetch player information
+
+4. View results in the table
+
+5. Export data using the Excel, CSV, or JSON buttons
+
+### Command Line Interface
+
+**Interactive Mode:**
+```bash
+python fide_extractor.py
+```
+Enter player IDs or names when prompted, then press Enter twice to process.
+
+**Batch Mode:**
+```bash
+python extract_from_file.py input.txt output.xlsx
+```
+Create a text file with one FIDE ID or name per line.
+
+### Programmatic Usage
+
+```python
+from fide_extractor import FIDEDataExtractor
+
+# Initialize extractor
+extractor = FIDEDataExtractor()
+
+# Extract player data
+players = ['1503014', '22538496']
+data = extractor.extract_multiple_players(players)
+
+# Export to Excel
+extractor.export_to_excel(data, 'players.xlsx')
+
+# Or export to CSV/JSON manually
+import pandas as pd
+import json
+
+df = pd.DataFrame(data)
+df.to_csv('players.csv', index=False)
+
+with open('players.json', 'w') as f:
+    json.dump(data, f, indent=2)
+```
+
+## Data Extracted
+
+For each player, the following information is retrieved:
+
+| Field | Description |
+|-------|-------------|
+| FIDE ID | Unique player identifier |
+| Name | Player's full name |
+| Federation | Country/federation code |
+| Title | Chess title (GM, IM, FM, etc.) or N/A |
+| B-Year | Birth year |
+| Rating std | Standard chess rating |
+| Rating rapid | Rapid chess rating |
+| Rating blitz | Blitz chess rating |
+
+## Export Formats
+
+### Excel (.xlsx)
+Spreadsheet format compatible with Microsoft Excel, Google Sheets, and LibreOffice Calc.
+
+### CSV (.csv)
+Comma-separated values format for universal compatibility and database imports.
+
+### JSON (.json)
+JavaScript Object Notation format for programmatic use and API integration.
+
+## Project Structure
+
+```
+Fide/
+├── fide_gui.py              # GUI application
+├── fide_extractor.py        # Core extraction engine
+├── fide_api_extractor.py    # Alternative API-based extractor
+├── extract_from_file.py     # Batch file processor
+├── example_batch.py         # Usage example
+├── launch_gui.sh            # GUI launcher (Unix)
+├── launch_gui.bat           # GUI launcher (Windows)
+├── requirements.txt         # Python dependencies
+├── players_input.txt        # Sample input file
+└── README.md                # This file
+```
+
+## Documentation
+
+- **[START_HERE.md](START_HERE.md)** - Beginner's guide with step-by-step instructions
+- **[QUICKSTART.md](QUICKSTART.md)** - All usage methods and examples
+- **[COMPARISON.md](COMPARISON.md)** - Comparison of extraction methods
+- **[GUI_GUIDE.md](GUI_GUIDE.md)** - Detailed GUI usage instructions
+
+## Finding FIDE IDs
+
+1. Visit [ratings.fide.com](https://ratings.fide.com/)
+2. Search for a player by name
+3. The FIDE ID appears in the URL: `ratings.fide.com/profile/[ID]`
+
+**Example IDs:**
+- 1503014 (Magnus Carlsen)
+- 46616543 (Gukesh D)
+- 44129165 (Praggnanandhaa R)
+
+## Troubleshooting
+
+### GUI Won't Launch
+
+**macOS:**
+```bash
+brew install python-tk@3.13
+rm -rf venv && python3 -m venv venv
+source venv/bin/activate && pip install -r requirements.txt
 ```
 
 **Ubuntu/Debian:**
@@ -243,112 +205,128 @@ sudo apt-get install python3-tk
 ```
 
 **Windows:**
-Reinstall Python with the "tcl/tk and IDLE" option checked.
+Reinstall Python with "tcl/tk and IDLE" option enabled.
 
-### No Data Extracted (Shows N/A)
+### Module Import Errors
 
-**Possible causes:**
-- Invalid FIDE ID
-- Player name misspelled
-- Internet connection issues
-- FIDE website temporarily unavailable
-
-**Solutions:**
-- Verify FIDE IDs at [ratings.fide.com](https://ratings.fide.com/)
-- Check your internet connection
-- Try again later if FIDE website is down
-
-### Import Errors
-
-Make sure virtual environment is activated and packages are installed:
+Ensure virtual environment is activated and dependencies are installed:
 ```bash
-source venv/bin/activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## 🆚 Web Scraping vs API
+### Data Extraction Issues
 
-This project includes **two extraction methods**:
+- Verify FIDE ID is correct at [ratings.fide.com](https://ratings.fide.com/)
+- Check internet connectivity
+- Ensure FIDE website is accessible
+- For name searches, try the exact spelling
 
-### Web Scraping (`fide_extractor.py`)
-- ✅ Search by name or ID
-- ✅ Direct from FIDE website
-- ⚠️ Slower (web parsing)
-- ⚠️ May break if website changes
+### Title Shows "N/A"
 
-### API Method (`fide_api_extractor.py`)
-- ✅ Faster
-- ✅ Structured data
-- ⚠️ FIDE ID only (no name search)
-- ⚠️ Uses third-party API
+This is expected behavior. FIDE titles (GM, IM, FM, etc.) are only awarded to players who meet specific rating and performance criteria. Most players do not have official FIDE titles.
 
-👉 See [COMPARISON.md](COMPARISON.md) for detailed comparison.
+## Technical Details
 
-## 📚 Additional Documentation
+**Technologies:**
+- Python 3.8+
+- BeautifulSoup4 for HTML parsing
+- Pandas for data manipulation
+- OpenPyXL for Excel export
+- Tkinter for GUI
 
-- **[START_HERE.md](START_HERE.md)** - Complete beginner's guide
-- **[GUI_GUIDE.md](GUI_GUIDE.md)** - Detailed GUI tutorial with tips
-- **[QUICKSTART.md](QUICKSTART.md)** - All methods explained
-- **[COMPARISON.md](COMPARISON.md)** - Compare extraction approaches
+**Extraction Method:**
+- Web scraping from ratings.fide.com
+- 1-second delay between requests (server-friendly)
+- Robust error handling
 
-## 🌐 Alternative: FIDE API
+**Data Source:**
+All data is extracted from publicly available FIDE player profiles.
 
-There's an open-source REST API available at [fide-api](https://github.com/cassiofb-dev/fide-api):
+## Web Scraping vs API
+
+This project includes two extraction methods:
+
+### Web Scraping (Default)
+- **File:** `fide_extractor.py`
+- **Pros:** Name and ID search, direct from FIDE
+- **Cons:** Slower, may break if website changes
+
+### API Method (Alternative)
+- **File:** `fide_api_extractor.py`
+- **Pros:** Faster, structured data
+- **Cons:** ID only, third-party dependency
+
+See [COMPARISON.md](COMPARISON.md) for detailed comparison.
+
+## Third-Party API Alternative
+
+An open-source REST API is available at [fide-api](https://github.com/cassiofb-dev/fide-api):
 
 ```bash
-# Use hosted API
+# Hosted API
 curl https://fide-api.vercel.app/player/1503014
 
-# Or run locally with Docker
+# Self-hosted with Docker
 git clone https://github.com/cassiofb-dev/fide-api
 cd fide-api
 docker compose up -d
 ```
 
-Visit `http://localhost:8000/docs` for API documentation.
+## Best Practices
 
-## ⚙️ Technical Details
+- Respect FIDE's servers (built-in delays are implemented)
+- Use batch processing for multiple players
+- Verify extracted data for critical applications
+- Keep dependencies updated for security
 
-**Requirements:**
-- Python 3.8+
-- Internet connection
-- Libraries: requests, beautifulsoup4, pandas, openpyxl
+## Performance Notes
 
-**Extraction Method:**
-- Web scraping from ratings.fide.com
-- Parses HTML using BeautifulSoup
-- Respects server with 1-second delay between requests
+- Processing speed: ~1 player per second (web scraping)
+- API method: ~2 players per second
+- GUI supports concurrent extraction with progress indication
+- Batch files recommended for 10+ players
 
-**Data Source:**
-All data is scraped from publicly available FIDE profiles at [ratings.fide.com](https://ratings.fide.com/).
+## Limitations
 
-## 📝 Notes
+- Name search returns first match only
+- Requires active internet connection
+- Subject to FIDE website structure changes
+- Rate limited by built-in delays
 
-- The program respects FIDE's servers with built-in delays
-- Name searches return the first matching result
-- Inactive players still show their last known ratings
-- Export files include timestamps to prevent overwrites
+## Contributing
 
-## 📄 License
+Contributions are welcome. Please ensure:
+- Code follows existing style
+- Documentation is updated
+- Testing is performed before submission
 
-MIT License - Feel free to use, modify, and distribute.
+## License
 
-## ⚠️ Disclaimer
+MIT License - See LICENSE file for details.
 
-This tool scrapes publicly available data from FIDE's website for personal and educational use. Please use responsibly and in accordance with FIDE's terms of service.
+## Disclaimer
 
-## 🤝 Contributing
+This tool is for personal and educational use. It extracts publicly available data from FIDE's website. Users are responsible for complying with FIDE's terms of service and applicable data usage policies.
 
-Found a bug or want to improve the tool? Feel free to submit issues or pull requests!
+## Support
 
-## 💬 Support
+For issues, questions, or feature requests:
+1. Check existing documentation
+2. Review troubleshooting section
+3. Submit an issue with detailed information
 
-- Check the documentation files for detailed guides
-- Try the example scripts to understand usage
-- Report issues if you encounter problems
+## Changelog
+
+### Version 1.0.0 (2025)
+- Initial release
+- GUI and CLI interfaces
+- Multiple export formats
+- Batch processing support
+- Comprehensive documentation
 
 ---
 
-**Made with ♟️ for chess players and developers**
+**Developed for chess enthusiasts and data analysts**
 
-*Last updated: 2025 - Compatible with current FIDE website structure*
+*Compatible with FIDE website structure as of October 2025*
