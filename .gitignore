@@ -29,6 +29,12 @@ wheels/
 # Excel files (output)
 *.xlsx
 *.xls
+*.csv
+*.json
+
+# Test files
+testlist.md
+test_*.py
 
 # IDE
 .vscode/
