@@ -36,17 +36,28 @@ class FIDEAPIExtractor:
             data = response.json()
             
             # Normalize the data structure
-            return {
+            player_data = {
                 'FIDE ID': str(data.get('fide_id', fide_id)),
                 'Name': data.get('name', 'N/A'),
                 'Federation': data.get('federation', 'N/A'),
                 'Title': data.get('title', 'N/A'),
                 'B-Year': data.get('birth_year', 'N/A'),
+                'Age': 'N/A',
                 'Rating std': data.get('standard_rating', 'N/A'),
                 'Rating rapid': data.get('rapid_rating', 'N/A'),
                 'Rating blitz': data.get('blitz_rating', 'N/A'),
                 'World Rank': data.get('world_rank', 'N/A'),
             }
+            
+            # Calculate age
+            if player_data['B-Year'] != 'N/A':
+                try:
+                    birth_year = int(player_data['B-Year'])
+                    player_data['Age'] = str(2025 - birth_year)
+                except:
+                    player_data['Age'] = 'N/A'
+            
+            return player_data
         except requests.exceptions.RequestException as e:
             print(f"Error fetching FIDE ID {fide_id}: {str(e)}")
             return None
@@ -103,8 +114,11 @@ class FIDEAPIExtractor:
         
         df = pd.DataFrame(players_data)
         
+        # Replace N/A with empty strings
+        df = df.replace('N/A', '')
+        
         # Reorder columns for better readability
-        column_order = ['FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 
+        column_order = ['FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 'Age',
                        'Rating std', 'Rating rapid', 'Rating blitz', 'World Rank']
         
         # Only include columns that exist in the dataframe

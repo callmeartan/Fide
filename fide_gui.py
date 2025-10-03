@@ -393,7 +393,7 @@ class FIDEExtractorGUI:
         hsb = ttk.Scrollbar(tree_frame, orient="horizontal")
         
         # Treeview
-        columns = ('FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 'Std', 'Rapid', 'Blitz')
+        columns = ('FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 'Age', 'Std', 'Rapid', 'Blitz')
         self.tree = ttk.Treeview(
             tree_frame,
             columns=columns,
@@ -412,8 +412,9 @@ class FIDEExtractorGUI:
             'FIDE ID': 90,
             'Name': 200,
             'Federation': 90,
-            'Title': 100,
+            'Title': 60,
             'B-Year': 70,
+            'Age': 50,
             'Std': 70,
             'Rapid': 70,
             'Blitz': 70
@@ -534,15 +535,17 @@ class FIDEExtractorGUI:
         # Add data
         for idx, player in enumerate(self.players_data):
             tag = 'evenrow' if idx % 2 == 0 else 'oddrow'
+            # Replace N/A with empty string for display
             self.tree.insert('', tk.END, values=(
-                player.get('FIDE ID', 'N/A'),
-                player.get('Name', 'N/A'),
-                player.get('Federation', 'N/A'),
-                player.get('Title', 'N/A'),
-                player.get('B-Year', 'N/A'),
-                player.get('Rating std', 'N/A'),
-                player.get('Rating rapid', 'N/A'),
-                player.get('Rating blitz', 'N/A')
+                player.get('FIDE ID', ''),
+                player.get('Name', ''),
+                player.get('Federation', ''),
+                player.get('Title', ''),
+                player.get('B-Year', ''),
+                player.get('Age', ''),
+                player.get('Rating std', ''),
+                player.get('Rating rapid', ''),
+                player.get('Rating blitz', '')
             ), tags=(tag,))
         
         # Enable export
@@ -606,6 +609,8 @@ class FIDEExtractorGUI:
         """Export to Excel"""
         try:
             df = pd.DataFrame(self.players_data)
+            # Replace N/A with empty strings
+            df = df.replace('N/A', '')
             df.to_excel(filename, index=False, engine='openpyxl')
             messagebox.showinfo("Success", f"Data exported to:\n{filename}")
             self.status_bar.config(text=f"✓ Exported to Excel: {filename}")
@@ -616,6 +621,8 @@ class FIDEExtractorGUI:
         """Export to CSV"""
         try:
             df = pd.DataFrame(self.players_data)
+            # Replace N/A with empty strings
+            df = df.replace('N/A', '')
             df.to_csv(filename, index=False, encoding='utf-8')
             messagebox.showinfo("Success", f"Data exported to:\n{filename}")
             self.status_bar.config(text=f"✓ Exported to CSV: {filename}")
@@ -625,8 +632,14 @@ class FIDEExtractorGUI:
     def _export_json(self, filename):
         """Export to JSON"""
         try:
+            # Replace N/A with empty strings
+            clean_data = []
+            for player in self.players_data:
+                clean_player = {k: ('' if v == 'N/A' else v) for k, v in player.items()}
+                clean_data.append(clean_player)
+            
             with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(self.players_data, f, indent=2, ensure_ascii=False)
+                json.dump(clean_data, f, indent=2, ensure_ascii=False)
             messagebox.showinfo("Success", f"Data exported to:\n{filename}")
             self.status_bar.config(text=f"✓ Exported to JSON: {filename}")
         except Exception as e:

@@ -71,6 +71,7 @@ class FIDEDataExtractor:
                 'Name': name,
                 'Federation': 'N/A',
                 'B-Year': 'N/A',
+                'Age': 'N/A',
                 'Rating std': 'N/A',
                 'Rating rapid': 'N/A',
                 'Rating blitz': 'N/A',
@@ -122,13 +123,44 @@ class FIDEDataExtractor:
                     if title_div:
                         title = title_div.text.strip()
                         if title and title.lower() != 'none':
+                            # Abbreviate titles
+                            title = self._abbreviate_title(title)
                             data['Title'] = title
+            
+            # Calculate age
+            if data['B-Year'] != 'N/A':
+                try:
+                    birth_year = int(data['B-Year'])
+                    data['Age'] = str(2025 - birth_year)
+                except:
+                    data['Age'] = 'N/A'
+            else:
+                data['Age'] = 'N/A'
             
             return data
             
         except Exception as e:
             print(f"Error parsing player page: {str(e)}")
             return None
+    
+    def _abbreviate_title(self, title: str) -> str:
+        """Abbreviate chess titles"""
+        title_map = {
+            'Grandmaster': 'GM',
+            'International Master': 'IM',
+            'FIDE Master': 'FM',
+            'Candidate Master': 'CM',
+            'Woman Grandmaster': 'WGM',
+            'Women Grandmaster': 'WGM',
+            'Woman International Master': 'WIM',
+            'Women International Master': 'WIM',
+            'Women Intl. Master': 'WIM',
+            'Woman FIDE Master': 'WFM',
+            'Women FIDE Master': 'WFM',
+            'Woman Candidate Master': 'WCM',
+            'Women Candidate Master': 'WCM',
+        }
+        return title_map.get(title, title)
     
     def _parse_search_results(self, html: str) -> List[Dict]:
         """Parse search results page"""
@@ -197,8 +229,11 @@ class FIDEDataExtractor:
         
         df = pd.DataFrame(players_data)
         
+        # Replace N/A with empty strings
+        df = df.replace('N/A', '')
+        
         # Reorder columns for better readability
-        column_order = ['FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 
+        column_order = ['FIDE ID', 'Name', 'Federation', 'Title', 'B-Year', 'Age',
                        'Rating std', 'Rating rapid', 'Rating blitz']
         
         # Only include columns that exist in the dataframe
