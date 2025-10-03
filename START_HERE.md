@@ -4,9 +4,10 @@ Welcome! This guide will get you up and running in 5 minutes.
 
 ## ⚡ Quick Setup (Do This First)
 
+### macOS/Linux:
 ```bash
 # Navigate to the project folder
-cd /Users/artan/Desktop/development/Fide
+cd /path/to/Fide
 
 # Create virtual environment
 python3 -m venv venv
@@ -17,6 +18,23 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+### Windows:
+```cmd
+REM Navigate to the project folder
+cd C:\Path\To\Fide
+
+REM Create virtual environment
+python -m venv venv
+
+REM Activate it
+venv\Scripts\activate
+
+REM Install dependencies
+pip install -r requirements.txt
+```
+
+**Or on Windows: Just double-click `launch_gui.bat`** (if venv already created)
 
 ✅ **Done!** You're ready to use the extractor.
 

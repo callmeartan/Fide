@@ -1,0 +1,128 @@
+================================================================================
+                    FIDE EXTRACTOR - WINDOWS QUICK START
+================================================================================
+
+FIRST TIME SETUP:
+-----------------
+
+1. Install Python from python.org
+   ✓ Check "Add Python to PATH" (at bottom of first screen)
+   ✓ Check "tcl/tk and IDLE" (in customize installation)
+   
+   Need detailed help? See: WINDOWS_PYTHON_INSTALLATION.md
+
+2. Open Command Prompt in project folder
+   (Right-click folder → "Open in Terminal" or "Open PowerShell")
+
+3. Run these commands:
+   
+   python -m venv venv
+   venv\Scripts\activate
+   pip install -r requirements.txt
+
+================================================================================
+
+RUNNING THE GUI:
+----------------
+
+METHOD 1 (Easiest):
+   Double-click "launch_gui.bat"
+
+METHOD 2 (Command Line):
+   Open Command Prompt in folder, then:
+   
+   venv\Scripts\activate
+   python fide_gui.py
+
+================================================================================
+
+USING THE GUI:
+--------------
+
+1. Enter FIDE IDs or player names (one per line)
+   Example:
+   22538496
+   12528374
+   Magnus Carlsen
+
+2. Click "Extract Data"
+
+3. View results in table
+
+4. Click "Excel", "CSV", or "JSON" to export
+
+================================================================================
+
+COMMAND LINE TOOLS:
+-------------------
+
+Interactive Mode:
+   venv\Scripts\activate
+   python fide_extractor.py
+
+Batch from File:
+   venv\Scripts\activate
+   python extract_from_file.py players_input.txt output.xlsx
+
+Example Script:
+   venv\Scripts\activate
+   python example_batch.py
+
+================================================================================
+
+TROUBLESHOOTING:
+----------------
+
+"python is not recognized"
+   → Reinstall Python, check "Add to PATH"
+   → See: WINDOWS_PYTHON_INSTALLATION.md
+
+"No module named tkinter"
+   → Reinstall Python, check "tcl/tk and IDLE"
+   → See: WINDOWS_PYTHON_INSTALLATION.md
+
+PowerShell won't run script
+   → Use Command Prompt instead
+   → Or run: Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Dependencies not found
+   → Run: venv\Scripts\activate
+   → Then: pip install -r requirements.txt
+
+================================================================================
+
+FILE LOCATIONS:
+---------------
+
+Your Desktop:
+   C:\Users\YourName\Desktop\Fide
+
+Your Documents:
+   C:\Users\YourName\Documents\Fide
+
+Your Downloads:
+   C:\Users\YourName\Downloads\Fide
+
+================================================================================
+
+TIPS:
+-----
+
+• Always activate venv first: venv\Scripts\activate
+• Use launch_gui.bat for quick access
+• Create desktop shortcut to launch_gui.bat
+• Virtual environment keeps dependencies separate
+• See WINDOWS_PYTHON_INSTALLATION.md for Python setup
+
+================================================================================
+
+SUPPORT:
+--------
+
+Python installation: WINDOWS_PYTHON_INSTALLATION.md
+Full documentation: README.md
+Windows guide: WINDOWS_GUIDE.md
+Quick tutorial: START_HERE.md
+
+================================================================================
+

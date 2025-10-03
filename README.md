@@ -45,9 +45,9 @@ This tool enables automated extraction of player information from [ratings.fide.
    pip install -r requirements.txt
    ```
 
-### macOS Additional Setup (Required for GUI)
+### Platform-Specific Setup
 
-If you're on macOS and want to use the GUI, install tkinter:
+**macOS (Required for GUI):**
 ```bash
 brew install python-tk@3.13
 # Then recreate the virtual environment
@@ -57,11 +57,24 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+**Windows:**
+
+Ensure Python is installed with "tcl/tk and IDLE" option checked. See [WINDOWS_GUIDE.md](WINDOWS_GUIDE.md) for detailed instructions.
+
 ### First Run
 
 **Option 1: Graphical Interface (Recommended)**
+
+*macOS/Linux:*
 ```bash
 python fide_gui.py
+# Or use: ./launch_gui.sh
+```
+
+*Windows:*
+```cmd
+python fide_gui.py
+# Or double-click: launch_gui.bat
 ```
 
 **Option 2: Command Line**
@@ -158,24 +171,33 @@ JavaScript Object Notation format for programmatic use and API integration.
 
 ```
 Fide/
-├── fide_gui.py              # GUI application
-├── fide_extractor.py        # Core extraction engine
-├── fide_api_extractor.py    # Alternative API-based extractor
-├── extract_from_file.py     # Batch file processor
-├── example_batch.py         # Usage example
-├── launch_gui.sh            # GUI launcher (Unix)
-├── launch_gui.bat           # GUI launcher (Windows)
-├── requirements.txt         # Python dependencies
-├── players_input.txt        # Sample input file
-└── README.md                # This file
+├── fide_gui.py                 # GUI application
+├── fide_extractor.py           # Core extraction engine
+├── fide_api_extractor.py       # Alternative API-based extractor
+├── extract_from_file.py        # Batch file processor
+├── example_batch.py            # Usage example
+│
+├── launch_gui.sh               # GUI launcher (macOS/Linux)
+├── launch_gui.bat              # GUI launcher (Windows)
+│
+├── README.md                   # Main documentation
+├── WINDOWS_GUIDE.md            # Windows installation guide
+├── WINDOWS_QUICK_START.txt     # Windows quick reference
+├── START_HERE.md               # Quick start guide
+├── QUICKSTART.md               # All usage methods
+├── COMPARISON.md               # Method comparison
+│
+├── requirements.txt            # Python dependencies
+├── players_input.txt           # Sample input file
+└── .gitignore                  # Git ignore rules
 ```
 
 ## Documentation
 
 - **[START_HERE.md](START_HERE.md)** - Beginner's guide with step-by-step instructions
+- **[WINDOWS_GUIDE.md](WINDOWS_GUIDE.md)** - Complete Windows installation and usage guide
 - **[QUICKSTART.md](QUICKSTART.md)** - All usage methods and examples
 - **[COMPARISON.md](COMPARISON.md)** - Comparison of extraction methods
-- **[GUI_GUIDE.md](GUI_GUIDE.md)** - Detailed GUI usage instructions
 
 ## Finding FIDE IDs
 
